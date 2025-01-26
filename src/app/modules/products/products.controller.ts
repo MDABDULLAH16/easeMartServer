@@ -2,12 +2,19 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { productServices } from './products.services';
+import { Category } from '../categories/category.model';
+import AppError from '../../errors/AppError';
 
 const createProduct = catchAsync(async (req, res) => {
-  const product = req.body;
+  const product = { ...req.body, isDeleted: false };
+  const { category } = req.body;
+  const isExistingCategory = await Category.find(category);
+  if (!isExistingCategory) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Category Not Found');
+  }
   const result = await productServices.createProductInDB(product);
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'Product created successfully',
     data: result,

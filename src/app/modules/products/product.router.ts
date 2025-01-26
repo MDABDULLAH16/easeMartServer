@@ -2,19 +2,22 @@ import express from 'express';
 
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../user/user.constant';
-import {
-  validateCreateProduct,
-  validateUpdateProduct,
-} from './product.validation';
+
 import { productController } from './products.controller';
+import validateRequest from '../../middlewares/validateRequest';
+import {
+  createProductZodSchema,
+  updateProductSchema,
+} from './product.validation';
 
 const router = express.Router();
 
 // Create a product (Admin-only access)
 router.post(
   '/',
-  validateCreateProduct,
+
   //   auth(USER_ROLE.admin),
+  validateRequest(createProductZodSchema),
   productController.createProduct
 );
 
@@ -27,7 +30,7 @@ router.get('/:_id', productController.getSingleProduct);
 // Update a product by ID (Admin-only access)
 router.put(
   '/:_id',
-  validateUpdateProduct,
+  validateRequest(updateProductSchema),
   //   auth(USER_ROLE.admin),
   productController.updateProduct
 );

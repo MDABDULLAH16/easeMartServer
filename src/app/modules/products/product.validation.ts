@@ -1,54 +1,35 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Request, Response, NextFunction } from 'express';
-import httpStatus from 'http-status';
+import { z } from 'zod';
 
-import AppError from '../../errors/AppError';
-import { createProductSchema, updateProductSchema } from './products.model';
+// Zod schema for creating a product
+export const createProductZodSchema = z.object({
+  body: z.object({
+    name: z.string().min(1, 'Product name is required'),
+    description: z.string(),
+    price: z.number().min(0, 'Price must be non-negative'),
+    stockQuantity: z.number().min(0, 'Stock quantity must be non-negative'),
+    category: z.string().min(1, 'Category is required'),
+    image: z.string().min(1, 'Images field is required'),
+    isDeleted: z.boolean().optional(),
+  }),
+});
+// export const createCategoryZodSchema = z.object({
+//   body: z.object({
+//     name: z.string().min(1, 'Category name is required'),
+//     description: z.string().optional(),
+//     image: z.string().optional(),
+//   }),
+// });
 
-const validateCreateProduct = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    createProductSchema.parse(req.body);
-    next();
-  } catch (error: any) {
-    // Extracting error messages from Zod validation
-    const validationErrors = error.errors
-      ? error.errors.map((err: any) => err.message).join(', ')
-      : 'Invalid data format';
+// Zod schema for updating a product
+export const updateProductSchema = z.object({
+  name: z.string().optional(),
+  description: z.string().optional(),
+  price: z.number().min(0).optional(),
+  stockQuantity: z.number().min(0).optional(),
+  category: z.string().optional(),
+  images: z.string().optional(),
+});
 
-    next(
-      new AppError(
-        httpStatus.BAD_REQUEST,
-        `Validation failed: ${validationErrors}`
-      )
-    );
-  }
-};
+// Export types for parsed input data
 
-const validateUpdateProduct = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    updateProductSchema.parse(req.body);
-    next();
-  } catch (error: any) {
-    // Extracting error messages from Zod validation
-    const validationErrors = error.errors
-      ? error.errors.map((err: any) => err.message).join(', ')
-      : 'Invalid data format';
-
-    next(
-      new AppError(
-        httpStatus.BAD_REQUEST,
-        `Validation failed: ${validationErrors}`
-      )
-    );
-  }
-};
-
-export { validateCreateProduct, validateUpdateProduct };
+export type UpdateProductInput = z.infer<typeof updateProductSchema>;

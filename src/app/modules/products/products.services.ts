@@ -1,13 +1,14 @@
 import { TProduct } from './products.interface';
-import Product from './products.model';
+import { Product } from './products.model';
 
 const createProductInDB = async (payload: TProduct) => {
-  const result = await Product.create(payload);
+  const result = (await Product.create(payload)).populate('category');
+
   return result;
 };
 
 const getAllProductsFromDB = async () => {
-  const result = await Product.find({ isDeleted: false });
+  const result = await Product.find();
   return result;
 };
 
