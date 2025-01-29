@@ -3,8 +3,9 @@ import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
 import { TOrder } from './order.interface';
-import { Order } from './order.model';
+
 import { Product } from '../products/products.model';
+import { Order } from './order.model';
 
 const createOrderInDB = async (payload: TOrder) => {
   // Check if user exists

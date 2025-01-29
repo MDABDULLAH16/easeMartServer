@@ -6,6 +6,6 @@ export interface TProduct {
   price: number;
   stockQuantity: number;
   category: Types.ObjectId;
-  images: string;
+  image: string;
   isDeleted?: boolean;
 }

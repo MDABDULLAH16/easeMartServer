@@ -18,7 +18,7 @@ router.get('/', categoryController.getAllCategories);
 
 router.get('/:id', categoryController.getSingleCategory);
 
-router.patch(
+router.put(
   '/:id',
   validateRequest(updateCategoryZodSchema),
   categoryController.updateCategory

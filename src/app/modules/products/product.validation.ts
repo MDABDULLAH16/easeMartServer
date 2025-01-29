@@ -27,7 +27,7 @@ export const updateProductSchema = z.object({
   price: z.number().min(0).optional(),
   stockQuantity: z.number().min(0).optional(),
   category: z.string().optional(),
-  images: z.string().optional(),
+  image: z.string().optional(),
 });
 
 // Export types for parsed input data

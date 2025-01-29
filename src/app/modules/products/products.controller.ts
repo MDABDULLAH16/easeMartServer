@@ -21,16 +21,30 @@ const createProduct = catchAsync(async (req, res) => {
   });
 });
 
-const getAllProducts = catchAsync(async (req, res) => {
-  const result = await productServices.getAllProductsFromDB();
+// const getAllProducts = catchAsync(async (req, res) => {
+//   const result = await productServices.getAllProductsFromDB();
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: 'All products retrieved successfully',
+//     data: result,
+//   });
+// });
+export const getAllProducts = catchAsync(async (req, res) => {
+  const { name } = req.query;
+
+  // Fetch all products or search by name
+  const products = await productServices.getAllProductsFromDB(name as string);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'All products retrieved successfully',
-    data: result,
+    message: name
+      ? `Products with name '${name}' retrieved successfully`
+      : 'All products retrieved successfully',
+    data: products,
   });
 });
-
 const getSingleProduct = catchAsync(async (req, res) => {
   const { _id } = req.params;
   const result = await productServices.getSingleProductFromDB(_id);

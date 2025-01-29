@@ -7,11 +7,20 @@ const createProductInDB = async (payload: TProduct) => {
   return result;
 };
 
-const getAllProductsFromDB = async () => {
-  const result = await Product.find();
-  return result;
-};
+// const getAllProductsFromDB = async () => {
+//   const result = await Product.find();
+//   return result;
+// };
+// Get all products or search by name
+const getAllProductsFromDB = async (name?: string) => {
+  if (name) {
+    // Search by name (case-insensitive)
+    return await Product.find({ name: { $regex: name, $options: 'i' } });
+  }
 
+  // Return all products if no name is provided
+  return await Product.find();
+};
 const getSingleProductFromDB = async (_id: string) => {
   const result = await Product.findOne({ _id });
   return result;
