@@ -11,6 +11,8 @@ router.post(
   UserControllers.createUser
 );
 router.get('/', UserControllers.getAllUserFromDbReq);
+router.get('/:_id', UserControllers.getSingleUserFromDbReq);
 router.put('/:_id', UserControllers.userUpdateReq);
+router.delete('/:_id', UserControllers.deleteUserFromDbReq);
 
 export const UserRouter = router;

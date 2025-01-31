@@ -1,12 +1,12 @@
 import express from 'express';
 
-import auth from '../../middlewares/auth';
-import { USER_ROLE } from '../user/user.constant';
+// import auth from '../../middlewares/auth';
+// import { USER_ROLE } from '../user/user.constant';
 
 import { productController } from './products.controller';
 import validateRequest from '../../middlewares/validateRequest';
 import {
-  createProductZodSchema,
+  // createProductZodSchema,
   updateProductSchema,
 } from './product.validation';
 
@@ -17,7 +17,7 @@ router.post(
   '/',
 
   //   auth(USER_ROLE.admin),
-  validateRequest(createProductZodSchema),
+  // validateRequest(createProductZodSchema),
   productController.createProduct
 );
 
@@ -36,6 +36,8 @@ router.put(
 );
 
 // Delete a product by ID (Admin-only access)
-router.delete('/:_id', auth(USER_ROLE.admin), productController.deleteProduct);
+router.delete('/:_id',
+  // auth(USER_ROLE.admin),
+  productController.deleteProduct);
 
 export const ProductRoute = router;

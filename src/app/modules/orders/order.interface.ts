@@ -9,5 +9,8 @@ export type TOrder = {
   quantity: number;
   email: string;
   price: number;
+  status: string;
+  paymentStatus: string;
+  transactionId: string;
   isDeleted: boolean;
 };

@@ -1,24 +1,26 @@
-import mongoose, { Document, Schema, Types } from 'mongoose';
+import mongoose, {  Schema,  } from 'mongoose';
+import { TProduct } from './products.interface';
 
-export interface TProduct extends Document {
-  name: string;
-  description: string;
-  price: number;
-  stockQuantity: number;
-  category: Types.ObjectId;
-  image: string;
-  isDeleted: boolean;
-}
+// export interface TProduct extends Document {
+//   name: string;
+//   description: string;
+//   price: number;
+//   stockQuantity: number;
+//   category: Types.ObjectId;
+//   image: string;
+//   isDeleted: boolean;
+// }
 
 // Mongoose Product Schema
 const CreateProductSchema: Schema = new Schema<TProduct>({
-  name: { type: String, required: true, unique: true },
+  name: { type: String,  },
   description: { type: String },
   image: { type: String },
   price: { type: Number },
   stockQuantity: { type: Number },
+  // category: {type:String},
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Category',
     required: true,
   },

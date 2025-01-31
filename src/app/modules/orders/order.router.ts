@@ -1,13 +1,13 @@
 import express from 'express';
-import validateRequest from '../../middlewares/validateRequest';
-import { createOrderZodSchema, updateOrderZodSchema } from './order.validation';
+// import validateRequest from '../../middlewares/validateRequest';
+// import { createOrderZodSchema, updateOrderZodSchema } from './order.validation';
 import { orderController } from './order.controller';
 
 const router = express.Router();
 
 router.post(
   '/',
-  validateRequest(createOrderZodSchema),
+  // validateRequest(createOrderZodSchema)
   orderController.createOrder
 );
 
@@ -17,7 +17,7 @@ router.get('/:id', orderController.getSingleOrder);
 
 router.patch(
   '/:id',
-  validateRequest(updateOrderZodSchema),
+  // validateRequest(updateOrderZodSchema),
   orderController.updateOrder
 );
 

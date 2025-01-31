@@ -19,6 +19,14 @@ const getAllUserFromDB = async () => {
   const result = await User.find();
   return result;
 };
+const getSingleUserFromDB = async (_id:string) => {
+  const result = await User.findById({_id});
+  return result;
+};
+const deleteUserFromDB = async (_id:string) => {
+  const result = await User.findOneAndDelete({_id});
+  return result;
+};
 const updateUserOnDb = async (_id: string, payload: TUser) => {
   const result = await User.findByIdAndUpdate(_id, payload, {
     new: true,
@@ -31,5 +39,7 @@ export const userServices = {
   createUserIntoDB,
   isUserExistIntoDB,
   getAllUserFromDB,
+  getSingleUserFromDB,
   updateUserOnDb,
+  deleteUserFromDB
 };

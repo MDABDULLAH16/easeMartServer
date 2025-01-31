@@ -1,7 +1,17 @@
+import httpStatus from 'http-status';
+import AppError from '../../errors/AppError';
+import { Category } from '../categories/category.model';
 import { TProduct } from './products.interface';
 import { Product } from './products.model';
 
 const createProductInDB = async (payload: TProduct) => {
+  // console.log(payload);
+  
+  
+const isExistingCategory = await Category.findById(payload.category);
+  if (!isExistingCategory) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Category Not Found');
+  }
   const result = (await Product.create(payload)).populate('category');
 
   return result;
@@ -19,7 +29,7 @@ const getAllProductsFromDB = async (name?: string) => {
   }
 
   // Return all products if no name is provided
-  return await Product.find();
+  return await Product.find({ isDeleted: false });
 };
 const getSingleProductFromDB = async (_id: string) => {
   const result = await Product.findOne({ _id });
