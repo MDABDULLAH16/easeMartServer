@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { join } from 'path';
+import {  resolve } from 'path';
 import { Order } from '../orders/order.model';
 import { verifyPayment } from './payment.utils';
 import { readFileSync } from 'fs';
@@ -18,7 +18,7 @@ const confirmationService = async (transactionId: string,status:string) => {
   } else {
       message="Payment failed"
     }
-    const filePath = join(__dirname, '../../views/paymentView.html')
+    const filePath = resolve(process.cwd(), 'dist/views/paymentView.html');
     let template = readFileSync(filePath, 'utf-8')
 template= template.replace("{{message}}",message)
     

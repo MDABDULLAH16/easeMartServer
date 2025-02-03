@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios"
  import dotenv from 'dotenv'
-
+import AppError from "../../errors/AppError"
 
 
  dotenv.config()
@@ -41,14 +41,14 @@ try {
 export const verifyPayment = async (transId :string) => {
     try {
         const result = await axios.get(process.env.PAYMENT_VERIFY_URL!, {
-            params: {
-                request_id: transId,
-                signature_key: process.env.SIGNATURE_KEY,
-                store_id: process.env.STORE_ID,
-                type:"json"
-            }
-        })
-        return result.data
+        params: {
+            request_id: transId,
+            signature_key: process.env.SIGNATURE_KEY,
+            store_id: process.env.STORE_ID,
+            type:"json"
+        }
+    })
+    return result.data
     } catch (err) {
         throw new Error('Payment Verify Error')
     }
