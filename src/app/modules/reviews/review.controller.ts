@@ -5,11 +5,10 @@ import sendResponse from '../../utils/sendResponse';
 import { reviewServices } from './review.services';
 import AppError from '../../errors/AppError';
 import { Product } from '../products/products.model';
-import { User } from '../user/user.model';
 
 const createReview = catchAsync(async (req: Request, res: Response) => {
   const newReview = { ...req.body, isDeleted: false };
-  const { productId, userId } = req.body;
+  const { productId } = req.body;
   const product = await Product.findById(productId);
   if (!product) {
     throw new AppError(
@@ -17,13 +16,13 @@ const createReview = catchAsync(async (req: Request, res: Response) => {
       'product not found for post review'
     );
   }
-  const userInfo = await User.findById(userId);
-  if (!userInfo) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'you are not valid user for post review'
-    );
-  }
+  // const userInfo = await User.findById(userId);
+  // if (!userInfo) {
+  //   throw new AppError(
+  //     httpStatus.NOT_FOUND,
+  //     'you are not valid user for post review'
+  //   );
+  // }
   const result = await reviewServices.createReviewInDB(newReview);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,

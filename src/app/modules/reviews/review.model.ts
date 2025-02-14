@@ -3,7 +3,7 @@ import { IReview } from './review.interface';
 
 const reviewSchema = new Schema<IReview>(
   {
-    userId: { type: String, required: true },
+    userName: { type: String, required: true },
     productId: { type: String, required: true },
     description: { type: String, required: true },
     star: { type: Number, required: true, min: 1, max: 5 },
