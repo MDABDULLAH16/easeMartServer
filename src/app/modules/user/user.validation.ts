@@ -9,6 +9,7 @@ const userCreateSchema = z.object({
     phone: z.number().min(1, 'Phone number is required'),
     role: z.enum(['admin', 'user'], { required_error: 'Role is required' }),
     address: z.string().min(1, 'Address is required'),
+    image: z.string().min(1, 'image is required'),
   }),
 });
 

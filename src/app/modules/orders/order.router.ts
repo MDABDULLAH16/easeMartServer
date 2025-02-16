@@ -11,6 +11,11 @@ router.post(
 router.get(
   '/',
   // validateRequest(createOrderZodSchema)
+  ordersController.getAllOrder
+);
+router.get(
+  '/:email',
+  // validateRequest(createOrderZodSchema)
   ordersController.getOrderByUserId
 );
 

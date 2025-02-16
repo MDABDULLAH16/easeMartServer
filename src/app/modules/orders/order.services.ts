@@ -54,12 +54,17 @@ export const createOrder = async (orderData: any) => {
   return paymentInfo;
 };
 
-const getUserByUserId = async (userId: string) => {
-  const result = await Order.find({ userId });
+const getUserByUserId = async (email: string) => {
+  const result = await Order.find({ 'user.email': email });
+  return result;
+};
+const getAllOrder = async () => {
+  const result = await Order.find();
   return result;
 };
 
 export const oderServices = {
   createOrder,
   getUserByUserId,
+  getAllOrder
 };

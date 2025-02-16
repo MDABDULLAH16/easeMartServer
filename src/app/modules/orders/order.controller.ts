@@ -14,9 +14,19 @@ const createOrderReq = catchAsync(async (req, res) => {
   });
 });
 
+const getAllOrder = catchAsync(async (req, res) => {
+  
+  const result = await oderServices.getAllOrder();
+  sendResponse(res, {
+    data: result,
+    message: 'All order retrieve',
+    success: true,
+    statusCode: httpStatus.OK,
+  });
+});
 const getOrderByUserId = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-  const result = await oderServices.getUserByUserId(userId);
+  const { email } = req.params;
+  const result = await oderServices.getUserByUserId(email);
   sendResponse(res, {
     data: result,
     message: 'Order retrieve by User',
@@ -28,4 +38,5 @@ const getOrderByUserId = catchAsync(async (req, res) => {
 export const ordersController = {
   createOrderReq,
   getOrderByUserId,
+  getAllOrder
 };

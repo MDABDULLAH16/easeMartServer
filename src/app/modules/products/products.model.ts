@@ -1,4 +1,4 @@
-import mongoose, {  Schema,  } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { TProduct } from './products.interface';
 
 // export interface TProduct extends Document {
@@ -12,19 +12,24 @@ import { TProduct } from './products.interface';
 // }
 
 // Mongoose Product Schema
-const CreateProductSchema: Schema = new Schema<TProduct>({
-  name: { type: String,  },
-  description: { type: String },
-  image: { type: String },
-  price: { type: Number },
-  stockQuantity: { type: Number },
-  // category: {type:String},
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category',
-    required: true,
+const CreateProductSchema: Schema = new Schema<TProduct>(
+  {
+    name: { type: String },
+    description: { type: String },
+    image: { type: String },
+    price: { type: Number },
+    stockQuantity: { type: Number },
+    // category: {type:String},
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true,
+    },
+    isDeleted: { type: Boolean, default: false },
+
+    // Default to false
   },
-  isDeleted: { type: Boolean, default: false }, // Default to false
-});
+  { timestamps: true }
+);
 
 export const Product = mongoose.model<TProduct>('Product', CreateProductSchema);

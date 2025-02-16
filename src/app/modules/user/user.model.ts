@@ -10,6 +10,7 @@ const userSchema = new Schema<TUser>(
     phone: { type: Number, required: true },
     role: { type: String, enum: ['admin', 'user'] },
     address: { type: String, required: true },
+    image: { type: String, required: true },
   },
   { timestamps: true }
 );

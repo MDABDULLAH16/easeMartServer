@@ -3,6 +3,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { userServices } from './user.service';
 
+
 const createUser = catchAsync(async (req, res) => {
   const result = await userServices.createUserIntoDB(req.body);
 
@@ -46,6 +47,8 @@ const deleteUserFromDbReq = catchAsync(async (req, res) => {
 const userUpdateReq = catchAsync(async (req, res) => {
   const { _id } = req.params;
   const data = req.body;
+
+  
   const result = await userServices.updateUserOnDb(_id, data);
   sendResponse(res, {
     statusCode: httpStatus.OK,
